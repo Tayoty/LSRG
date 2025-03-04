@@ -2,3 +2,18 @@ user data
 collect > First Name, Last Name, Phone number, Email, Password 
 
 
+Signup 
+> Check if Fields are filled
+> Check if user already exist 
+>Hash Password
+>Save new User 
+
+Login 
+> Check if Fields are filled
+> Check if user exists
+> Check if password is correct 
+> Log user in 
+
+Reserve Seat 
+> Check if User have a reserved seat 
+> Select R

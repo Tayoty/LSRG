@@ -11,21 +11,85 @@ exports.signup = async (req, res) => {
 
          const existinguser = await commuter.findOne({email}); 
          if(existinguser){
-            return res.status(403).json({message: "User Acoount Exists, Login"}); 
+            return res.status(403).json({message: "User Account Exists, Login"}); 
             }; 
     
         const hashPassword = await bcrypt.hash(password, 10); 
-        const newcommuter = new commuter ({firstName, lastName, phoneNumber, email,
+        const newCommuter = new commuter ({firstName, lastName, phoneNumber, email,
              password: hashPassword}); 
 
-        await newcommuter.save(); 
+        await newCommuter.save(); 
         return res.status(201).json({message: "Successfully Signed up"})
     }catch(error){
-        console.log("Server Error")
+        console.log(error)
         return res.status(500).json({message: "Server Error"});
     }
 }; 
 
+exports.login = async (req, res) => {
+    const {email, password} = req.body
+    try{
+        if (!email || !password) {
+            return res.status(400).json({message: "Input email and password"}); 
+        }; 
+        const user = await commuter.findOne({email})
+        if(!user) {
+            return res.status(404).json({message: "Account does not exist"}); 
+        }; 
+        const passMatch = bcrypt.compare(password, user.password)
+        if(!passMatch){
+            return res.status(400).json({message: "Password incorrect"}); 
+        }; 
+        return res.status(200).json({message: "Logged In Successfully"}); 
+    } catch(error){
+        console.log(error)
+        return res.status(500).json({message: "Server Error"}); 
+    }; 
+}; 
 
+exports.reserveseat = async (req, res) => {
+    const {reservedTime, seatNo, seatType} = req.body 
+    const{id} = req.query
+    try{
+        const reserve = await commuter.findByIdAndUpdate({_id: id}, {
+            isReserved: true,
+            seatNo, 
+            seatType,
+            reservedTime,
+        }, {isNew: true})
 
+        
+        if(!reserve){
+            return res.status(400).json({message: "Reservation Not Found"})
+        }; 
+        if(reservedTime < Date.now.toLocaleDateString){
+            return res.status(400).json({message: "Book A Reserved Time In The Future"})
+        }
+        return res.status(200).json({message: "Seat Reserved"}); 
+    } catch(error){
+        console.log(error)("Server error")
+    }; 
+};
 
+exports.deletereservation = async (req, res) => {
+    const {id} = req.query
+    try{
+        const deleted = await commuter.findByIdAndUpdate({_id: id}, {
+            isReserved: false,
+            seatNo: null, 
+            seatType: null,
+            reservedTime: null,
+        }, {isNew: true})
+
+        if(!deleted) {
+            return res.status(403).json({message: "Reservation not Found"}); 
+        }; 
+
+        if(deleted){
+            return res.status(200).json({message: "Reservation Deleted"}); 
+        }
+
+    }catch(error) {
+        console.log(error) 
+    }
+}; 
