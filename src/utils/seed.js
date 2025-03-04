@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 
 const seedDB = async () => {
     try{
-        await mongoose.connect("mongodb://localhost:27017/LSGR")
+        await mongoose.connect(process.env.MONGO_URL)
         const gabrielPassword = await bcrypt.hash("Seededdata45678", 10); 
         const johnPassword = await bcrypt.hash("Seeddata45678", 10)
         await admin.create([
@@ -14,7 +14,7 @@ const seedDB = async () => {
         ]);
        console.log("Database seeded");    
     } catch(e){
-        console.log("Check Current Admins")
+        console.log("Update Admins or Server Error")
     }
 };  
 
