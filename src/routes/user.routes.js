@@ -1,12 +1,12 @@
 const express = require('express'); 
 const router = express.Router(); 
-const { signup, login, reserveseat, deletereservation, editreserve, services } = require('../controllers/user.controllers');
+const { signup, login, reserveseat, deletereservation, services, editreservation } = require('../controllers/user.controllers');
 
 
 router.post('/signup', signup); 
 router.post('/login', login); 
 router.put('/bookseat', reserveseat); 
-router.patch('/editbooking', editreserve); 
+router.patch('/editbooking', editreservation); 
 router.patch('/deletebooking', deletereservation); 
 router.get('/allservices', services); 
 

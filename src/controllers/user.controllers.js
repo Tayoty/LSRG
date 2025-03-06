@@ -24,7 +24,7 @@ exports.signup = async (req, res) => {
     }catch(error){
         console.log(error)
         return res.status(500).json({message: "Server Error"});
-    }
+    }; 
 }; 
 
 exports.login = async (req, res) => {
@@ -57,18 +57,24 @@ exports.reserveseat = async (req, res) => {
             seatNo, 
             seatType,
             reservedTime,
-        }, {isNew: true})
 
-        
+        }, {isNew: true})
+        if(commuter.seatType == "Economy"){
+            (booking.economySeat - 1)
+        }
+        else if(commuter.seatType == "Business"){
+            (booking.businessSeat - 1)
+        }; 
         if(!reserve){
-            return res.status(400).json({message: "Reservation Not Found"})
+            return res.status(400).json({message: "Reservation Not Found"}); 
         }; 
         if(reservedTime < Date.now.toLocaleDateString){
-            return res.status(400).json({message: "Book A Reserved Time In The Future"})
+            return res.status(400).json({message: "Book A Reserve Time In The Future"}); 
         }
         return res.status(200).json({message: "Seat Reserved"}); 
     } catch(error){
-        console.log(error)("Server error")
+        console.log("Server Error", error.message)
+        return res.status(500).json({message: "Server Error"});     
     }; 
 };
 
@@ -91,11 +97,12 @@ exports.deletereservation = async (req, res) => {
         }
 
     }catch(error) {
-        console.log(error) 
-    }
+        console.log(error.message) 
+        return res.status(500).json({message: "Server Error"}); 
+    }; 
 }; 
 
-exports.editreserve = async (req, res) => {
+exports.editreservation = async (req, res) => {
     const {id} = req.query
     try{
         const edit = await commuter.findByIdAndUpdate({_id: id}, {reservedTime: null}, {isNew: true})
@@ -107,14 +114,14 @@ exports.editreserve = async (req, res) => {
     }catch(error) {
         console.log(error)
         return res.status(500).json({message: "Server Error"}); 
-    }
+    }; 
 }; 
 
 exports.services = async (req, res) => {
     try{
         const service = await booking.find(); 
         return res.status(200)
-        .json({message: "Available Seats:", data:service, length: service.length}); 
+        .json({message: "Available Seats:", data:service}); 
 
     }catch(error){
         console.log("Server Error", error.message)
