@@ -14,11 +14,12 @@ const app = express();
 app.use(express.json()); 
 app.use(morgan("dev")); 
 app.use('/api/v1/commuter', commuterRoutes); 
-app.use('api/v1/admin', adminRoutes); 
+app.use('/api/v1/admin', adminRoutes); 
 
 //start and parse environment variables
 dotenv.config() 
 const port = process.env.PORT 
+seedDB(); 
 
 app.get('/', (req, res) => {
     res.send("Welcome to the LSGR API")

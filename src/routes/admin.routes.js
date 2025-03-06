@@ -5,7 +5,7 @@ const { adminlogin, uploadreservation,  } = require("../controllers/admin.contro
 
 
 router.post('/adminlogin', adminlogin); 
-router.post('/uploadreserve', uploadreservation); 
+router.post('/uploadreservation', uploadreservation); 
 
 
 
