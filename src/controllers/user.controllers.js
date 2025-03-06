@@ -59,12 +59,11 @@ exports.reserveseat = async (req, res) => {
             reservedTime,
 
         }, {isNew: true})
-        if(commuter.seatType == "Economy"){
-            (booking.economySeat - 1)
-        }
-        else if(commuter.seatType == "Business"){
-            (booking.businessSeat - 1)
-        }; 
+         if (seatType === "Economy") {
+            await booking.updateOne({}, { $inc: { economySeat: -1 } });
+        } else if (seatType === "Business") {
+            await booking.updateOne({}, { $inc: { businessSeat: -1 } });
+        } 
         if(!reserve){
             return res.status(400).json({message: "Reservation Not Found"}); 
         }; 
