@@ -5,11 +5,9 @@ const bcrypt = require("bcryptjs");
 const seedDB = async () => {
     try{
         await mongoose.connect(process.env.MONGO_URL)
-        const gabrielPassword = await bcrypt.hash("Seededdata45678", 10); 
-        const johnPassword = await bcrypt.hash("Seeddata45678", 10)
         await admin.create([
-            {firstName: "Gabriel", email: "gabriel@seedata.com", password: gabrielPassword}, 
-            {firstName: "John", email: "john@seedata.com", password: johnPassword}
+            {firstName: "Gabriel", email: "gabriel@seedata.com", password: "Seed4567"}, 
+            {firstName: "John", email: "john@seedata.com", password: "Seed7654"}
 
         ]);
        console.log("Database seeded");    
@@ -19,3 +17,5 @@ const seedDB = async () => {
 };  
 
 seedDB(); 
+
+module.exports = seedDB; 

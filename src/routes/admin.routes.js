@@ -1,10 +1,11 @@
 const express = require("express"); 
 const router = express.Router(); 
-const { adminlogin } = require("../controllers/admin.controllers");
+const { adminlogin, uploadreservation,  } = require("../controllers/admin.controllers");
 
 
 
 router.post('/adminlogin', adminlogin); 
+router.post('/uploadreserve', uploadreservation); 
 
 
 

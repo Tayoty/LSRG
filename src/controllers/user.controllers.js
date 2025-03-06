@@ -1,3 +1,4 @@
+const bookingModels = require('../models/booking.models');
 const commuter = require('../models/user.models'); 
 const bcrypt = require("bcryptjs"); 
 
@@ -92,4 +93,32 @@ exports.deletereservation = async (req, res) => {
     }catch(error) {
         console.log(error) 
     }
+}; 
+
+exports.editreserve = async (req, res) => {
+    const {id} = req.query
+    try{
+        const edit = await commuter.findByIdAndUpdate({_id: id}, {reservedTime: null}, {isNew: true})
+
+        if(!edit) {
+            return res.status(403).json({message: "Reservation not Found"}); 
+        }; 
+        return res.status(200).json({message: "Reservation Deleted"});
+    }catch(error) {
+        console.log(error)
+        return res.status(500).json({message: "Server Error"}); 
+    }
+}; 
+
+exports.services = async (req, res) => {
+    try{
+        const service = await booking.find()
+        if(!service){
+            return res.status(403).json({message: "Services not found"}); 
+        }
+        return res.status(200).json({message: "Available train services: "})
+
+    }catch(error){
+        console.log(error)
+    }; 
 }; 

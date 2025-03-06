@@ -1,5 +1,7 @@
 const admin = require("../models/admin.models"); 
 const bcrypt = require("bcryptjs"); 
+const seedDB = require('../utils/seed'); 
+const booking = require('../models/booking.models'); 
 
 
 exports.adminlogin = async (req, res) => {
@@ -20,11 +22,17 @@ exports.adminlogin = async (req, res) => {
     } catch(error) {
         console.log(error)("Server Error")
     }; 
-    
 }; 
 
-
-
-
-
-
+exports.uploadreservation = async (req, res) => {
+    const {economySeat, businessSeat} = req.body
+        try{
+            if(!economySeat || !businessSeat){
+                return res.status(400).json({message: "Input All Fields"}); 
+            }
+            await booking.bulkSave(); 
+            return res.status(200).json({message: "Reservations Updated"});  
+        } catch(error) {
+            console.log(error)("Server Error")
+        };
+};
