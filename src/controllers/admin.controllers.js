@@ -31,8 +31,12 @@ exports.uploadreservation = async (req, res) => {
         try{
             if(!economySeat || !businessSeat){
                 return res.status(400).json({message: "Input All Fields"}); 
-            }
-            await booking.save(); 
+            }; 
+            const newreservation = new booking({
+                economySeat: economySeat, 
+                businessSeat: businessSeat
+            }); 
+            await newreservation.save(); 
             return res.status(200).json({message: "Reservations Updated"});  
         } catch(error) {
             console.log("Server Error", error.message)
