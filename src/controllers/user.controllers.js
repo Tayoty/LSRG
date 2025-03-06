@@ -1,4 +1,4 @@
-const bookingModel = require('../models/booking.models'); 
+const booking = require('../models/booking.models'); 
 const commuter = require('../models/user.models'); 
 const bcrypt = require("bcryptjs"); 
 
@@ -114,7 +114,7 @@ exports.services = async (req, res) => {
     try{
         const service = await booking.find(); 
         return res.status(200)
-        .json({message: "Available train services:", data: service, length: service.length}); 
+        .json({message: "Available Seats:", data:service, length: service.length}); 
 
     }catch(error){
         console.log("Server Error", error.message)

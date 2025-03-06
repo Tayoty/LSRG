@@ -19,7 +19,7 @@ const seedDB = async () => {
         ]);
        console.log("Database seeded");    
     } catch(e){
-        console.log("Current Admins already exist")
+        console.log("Admins seeded, skipped seeding")
     }
 }; 
 
