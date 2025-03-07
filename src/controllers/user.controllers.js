@@ -36,7 +36,7 @@ exports.login = async (req, res) => {
         const user = await commuter.findOne({email})
         if(!user) {
             return res.status(404).json({message: "Account does not exist"}); 
-        }; 
+        }
         const passMatch = bcrypt.compare(password, user.password)
         if(!passMatch){
             return res.status(400).json({message: "Password incorrect"}); 

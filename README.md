@@ -6,6 +6,10 @@ A RESTful API for a transportation seat reservation system with user and admin f
 
 The LSGR API provides a platform for commuters to register, book seats, and manage their reservations. The system includes admin capabilities for managing seats, viewing statistics, and overseeing the reservation system.
 
+## Postman Link 
+
+https://documenter.getpostman.com/view/41822725/2sAYdoDSPr
+
 ## Features
 
 ### Commuter Features
