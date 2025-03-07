@@ -103,13 +103,20 @@ exports.deletereservation = async (req, res) => {
 
 exports.editreservation = async (req, res) => {
     const {id} = req.query
+    const{seatType, seatNo, reservedTime} = req.body
     try{
-        const edit = await commuter.findByIdAndUpdate({_id: id}, {reservedTime: null}, {isNew: true})
+        const edit = await commuter.findByIdAndUpdate({_id: id},
+            {reservedTime: reservedTime, 
+                seatType : seatType, 
+                seatNo : seatNo,
+                isReserved : true
+            }, 
+            {isNew: true})
 
         if(!edit) {
             return res.status(403).json({message: "Reservation not Found"}); 
         }; 
-        return res.status(200).json({message: "Reservation Deleted"});
+        return res.status(200).json({message: "Reservation Edited"});
     }catch(error) {
         console.log(error)
         return res.status(500).json({message: "Server Error"}); 

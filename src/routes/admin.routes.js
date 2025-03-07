@@ -6,7 +6,7 @@ const { adminlogin, uploadreservation, allcommuters, allbookings,  } = require("
 
 router.post('/adminlogin', adminlogin); 
 router.post('/uploadreservation', uploadreservation); 
-router.get('/allcommunters', allcommuters); 
+router.get('/allcommuters', allcommuters); 
 router.get('/allbookings', allbookings); 
 
 
